@@ -21,7 +21,7 @@ function App() {
         <header className="App-header">
           <div className="logo-search">
             <div className="logo">
-              <img src="logo.png" />
+              <img src="logo.png" alt=""/>
             </div>
             <div className="search-bar" alt="Logo">
               <input type="text" placeholder="Search" />
