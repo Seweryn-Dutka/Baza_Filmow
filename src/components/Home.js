@@ -1,31 +1,40 @@
-// Home.js
+import React, {useEffect, useState} from 'react';
+import '../styles/Home.css'
+import MovieGrid from "./MovieGrid";
+import {FaPlus} from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+const Home = () => {
 
-const MovieTile = ({ movie }) => (
-  <Link to={`/details/${encodeURIComponent(movie.title)}`}>
-    <div className="movie-tile">
-      <img src={movie.image} alt={movie.title} />
-      <h3>{movie.title}</h3>
-      <p>{movie.description}</p>
-      <div className="rating">
-        {Array.from({ length: movie.rating }, (_, i) => (
-          <span key={i}>&#9733;</span>
-        ))}
-      </div>
-    </div>
-  </Link>
-);
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-const Home = ({ movies }) => (
-  <div>
-    <div id="search-results" className="movie-tiles">
-      {movies.map((movie, index) => (
-        <MovieTile key={index} movie={movie} />
-      ))}
-    </div>
-  </div>
-);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+    const handleChangeRoute = () => {
+        navigate('/add');
+        window.location.reload();
+    };
+
+    return (
+        <div className="main">
+            <div>
+                <section>
+                    <h2>Filmy</h2>
+                    <MovieGrid />
+                </section>
+            </div>
+            {isLoggedIn && (
+                <div className="add-movie-button" onClick={handleChangeRoute}>
+                    <FaPlus />
+                </div>
+            )}
+        </div>
+    );
+};
 
 export default Home;

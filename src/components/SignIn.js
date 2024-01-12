@@ -1,43 +1,73 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './SignInUp.css';
+import { Link, useNavigate } from 'react-router-dom';
+import '../styles/SignInUp.css';
+import axios from "axios";
 
 const SignIn = () => {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     login: '',
     haslo: '',
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  const handleInputChange = (event) => {
+    setFormData({
+        ...formData,
+        [event.target.name]: event.target.value,
+    });
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Dane logowania:', formData);
-    // Dodaj logikę logowania tutaj
-  };
+const [errors, setErrors] = useState({});
+const handleChangeRoute = () => {
+    navigate('/');
+    window.location.reload();
+};
 
-  return (
-    <div className="signinup-container">
-      <form onSubmit={handleSubmit}>
-        <label>
-          <text>Login:</text>
-          <br />
-          <input type="text" name="login" value={formData.login} onChange={handleChange} required />
-        </label>
-        <label>
-          <text>Hasło:</text>
-          <br />
-          <input type="password" name="haslo" value={formData.haslo} onChange={handleChange} required />
-        </label>
-        <br />
-        <button type="submit">Zaloguj się</button>
-      </form>
-      <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
-    </div>
-  );
+const handleLogin = async (event) => {
+    event.preventDefault();
+
+    if (!formData.login || !formData.password) {
+        return;
+    }
+
+    axios
+        .post('https://at.usermd.net/api/user/auth', {
+            login: formData.login,
+            password: formData.password
+        })
+        .then((response) => {
+            localStorage.setItem('token', response.data.token);
+            handleChangeRoute();
+        })
+        .catch((error) => {
+            const errorMessages = {};
+            errorMessages.password =
+                "Given username doesn't exist or the password is wrong!";
+            setErrors(errorMessages || {});
+            console.log(error);
+
+            setFormData({
+                login: '',
+                password: '',
+            });
+        });
+};
+
+return (
+  <div className="main-box">
+      <div className="signinup-container">
+          <h2>Zaloguj się</h2>
+          <form className="form-global">
+              <input type="text" id="login" name="login" placeholder="Login" value={formData.email} onChange={handleInputChange}/>
+              <input type="password" id="password" name="password" placeholder="Hasło" value={formData.email} onChange={handleInputChange}/>
+              <button className='Login_btn' type="submit" onClick={handleLogin} >Zaloguj się</button>
+          </form>
+          <p>Nie masz jeszcze konta? <Link to="/signup" className="login-link-text-gray">Zarejestruj się</Link></p>
+      </div>
+  </div>
+);
 };
 
 export default SignIn;

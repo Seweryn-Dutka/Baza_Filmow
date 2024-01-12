@@ -1,58 +1,96 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './SignInUp.css';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../styles/SignInUp.css';
 
 const SignUp = () => {
-  const [formData, setFormData] = useState({
-    login: '',
-    nazwa: '',
-    email: '',
-    haslo: '',
-  });
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+    });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+    const handleInputChange = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value,
+        });
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Dane rejestracji:', formData);
-    // Dodaj logikę rejestracji tutaj
+    const [errors, setErrors] = useState({});
+    const handleChangeRoute = () => {
+        navigate('/signin');
+        window.location.reload();
+    };
 
-    // Po zarejestrowaniu przekieruj użytkownika do strony logowania
-    // Zakładam, że ścieżka do strony logowania to '/login'. Możesz dostosować ją do swoich potrzeb.
-    // Dodatkowo, możesz przekierować użytkownika na stronę logowania, jeśli rejestracja powiedzie się.
-  };
+    const handleRegistration = async (event) => {
+        event.preventDefault();
+
+        if (!formData.name || !formData.email || !formData.password) {
+            return;
+        }
+
+        axios
+            .post('https://at.usermd.net/api/user/create', {
+                name: formData.name,  // Fix here
+                email: formData.email,
+                password: formData.password
+            })
+            .then((response) => {
+                handleChangeRoute();
+            })
+            .catch((error) => {
+                console.log(error);
+
+                setFormData({
+                    name: '',
+                    email: '',
+                    password: '',
+                });
+            });
+    };
 
   return (
-    <div className="signinup-container">
-    <form onSubmit={handleSubmit}>
-      <label>
-        <text>Login:</text>
-        <br />
-        <input type="text" name="login" value={formData.login} onChange={handleChange} required />
-      </label>
-      
-      <label>
-        <text>Nazwa:</text>
-        <br />
-        <input type="text" name="nazwa" value={formData.nazwa} onChange={handleChange} required />
-      </label>
-      <label>
-        <text>Email:</text>
-        <br />
-        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-      </label>
-      <label>
-        <text>Hasło:</text>
-        <br />
-        <input type="password" name="haslo" value={formData.haslo} onChange={handleChange} required />
-      </label>
-      <br />
-      <button type="submit">Zarejestruj się</button>
-      <p>Already have an account? <Link to="/signin">Sign In</Link></p>
-    </form>
+    <div className="main-box">
+        <div className="signinup-container">
+            <h2>Zarejestruj się</h2>
+            <form className="form-global">
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Nazwa"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="E-mail"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Hasło"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                />
+                <button className='Register_btn' type="submit" onClick={handleRegistration}>
+                    Zarejestruj się
+                </button>
+            </form>
+            <p>
+                Masz już konto?{' '}
+                <Link to="/signin" className="login-link-text">
+                    Zaloguj się
+                </Link>
+            </p>
+        </div>
     </div>
   );
 };
