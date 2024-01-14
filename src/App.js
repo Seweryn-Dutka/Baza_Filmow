@@ -10,6 +10,7 @@ import MovieDetails from "./components/MovieDetails";
 import SearchResults from "./components/SearchResults";
 import AddMovie from "./components/AddMovie";
 import {isExpired} from "react-jwt";
+import DeleteMovie from "./components/DeleteMovie";
 
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/search/:query" element={<SearchResults />} />
               <Route path="/details/:title/:id" element={<MovieDetails />} />
               <Route path="/add" element={isExpired(localStorage.getItem('token')) ? <Navigate replace to="/"/> : <AddMovie />} />
+              <Route path="/delete" element={isExpired(localStorage.getItem('token')) ? <Navigate replace to="/"/> : <DeleteMovie />} />
             </Routes>
           
         <Footer/>

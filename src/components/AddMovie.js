@@ -9,6 +9,9 @@ const AddMovie = () => {
         title: '',
         image: '',
         content: '',
+        rate: '',
+        productionYear: '',
+        genre: '',
     });
 
     const handleInputChange = (event) => {
@@ -27,7 +30,7 @@ const AddMovie = () => {
     const handleAdd = async (event) => {
         event.preventDefault();
 
-        if (!formData.title || !formData.image || !formData.content) {
+        if (!formData.title || !formData.image || !formData.content || !formData.rate || !formData.productionYear || !formData.genre) {
             return;
         }
 
@@ -35,7 +38,10 @@ const AddMovie = () => {
             .post('https://at.usermd.net/api/movies', {
                 title: formData.title,  // Fix here
                 image: formData.image,
-                content: formData.content
+                content: formData.content,
+                rate: formData.rate,
+                productionYear: formData.productionYear,
+                genre: formData.genre               
             })
             .then((response) => {
                 handleChangeRoute();
@@ -47,6 +53,9 @@ const AddMovie = () => {
                     title: '',
                     image: '',
                     content: '',
+                    rate: '',
+                    productionYear: '',
+                    genre: '',
                 });
             });
     };
@@ -82,11 +91,46 @@ const AddMovie = () => {
                             value={formData.content}
                             onChange={handleInputChange}
                         />
+                        <select
+                            id="rate"
+                            name="rate"
+                            value={formData.rate}
+                            onChange={handleInputChange}
+                        >
+                            {[...Array(10).keys()].map((num) => (
+                                <option key={num + 1} value={num + 1}>
+                                    {num + 1}
+                                </option>
+                            ))}
+                        </select>
+                        <select
+                            id="productionYear"
+                            name="productionYear"
+                            value={formData.productionYear}
+                            onChange={handleInputChange}
+                        >
+                            {[...Array(new Date().getFullYear() - 1899).keys()].map((num) => (
+                                <option key={1900 + num} value={1900 + num}>
+                                    {1900 + num}
+                                </option>
+                            ))}
+                        </select>
+
+                        <input
+                            type="text"
+                            id="genre"
+                            name="genre"
+                            placeholder="Gatunek"
+                            value={formData.genre}
+                            onChange={handleInputChange}
+                        />
+
                         <button className='add-movie-push-button' type="submit" onClick={handleAdd}>
                             Dodaj film
                         </button>
                     </div>
                 </form>
+                <Link to="/delete" className="delete-movie-push-button">Usuń film</Link>
             </div>
         </div>
     );
