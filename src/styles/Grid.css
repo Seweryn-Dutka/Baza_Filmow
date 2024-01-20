@@ -1,4 +1,3 @@
-/* Grid.css */
 .movie-grid-box {
   max-width: 1000px;
   margin: 20px auto;
@@ -58,5 +57,3 @@
 .pagination button.active {
   background-color: #c2e416;
 }
-
-/* You can add more styling for other elements as needed */

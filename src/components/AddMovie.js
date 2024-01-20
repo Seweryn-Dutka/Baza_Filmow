@@ -36,7 +36,7 @@ const AddMovie = () => {
 
         axios
             .post('https://at.usermd.net/api/movies', {
-                title: formData.title,  // Fix here
+                title: formData.title,
                 image: formData.image,
                 content: formData.content,
                 rate: formData.rate,

@@ -1,6 +1,6 @@
 .footer {
   background-color: #000;
-  position: relative;  /*Change to relative positioning to make the pseudo-elements relative to this container */
+  position: relative;
   bottom: 0;
 }
 
@@ -10,7 +10,7 @@
   max-width: 1300px;
   justify-content: center;
   align-items: center;
-  position: relative; /* Change to relative positioning to make the pseudo-elements relative to this container */
+  position: relative;
   width: 100%;
   margin: 0 auto;
 }
@@ -26,10 +26,10 @@
 .footer::after {
   content: "";
   position: fixed;
-  bottom: 0; /* Position at the bottom of the .footer container */
+  bottom: 0;
   height: 10px;
   background-color: #ffa;
-  transform: translateY(50%); /* Adjust translateY to center vertically at the bottom */
+  transform: translateY(50%);
   width: 0;
   animation: filmStrip 15s linear infinite;
 }

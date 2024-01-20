@@ -33,12 +33,10 @@ const MovieDetails = () => {
     }, [id]);
 
     if (loading) {
-        // Render loading spinner or another loading UI
         return <p>Loading...</p>;
     }
 
     if (error) {
-        // Render an error message
         return <p>Error: {error}</p>;
     }
 
@@ -46,7 +44,7 @@ const MovieDetails = () => {
         <div className="movie-box">
             <div className="movie-box-first-column">
                 <img src={movieDetails.image} alt={movieDetails.title} />
-                <button onClick={() => {/* Add your play functionality here */}}>
+                <button>
                     <FaPlayCircle />
                 </button>
             </div>

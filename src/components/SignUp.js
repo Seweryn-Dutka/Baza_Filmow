@@ -33,7 +33,7 @@ const SignUp = () => {
 
         axios
             .post('https://at.usermd.net/api/user/create', {
-                name: formData.name,  // Fix here
+                name: formData.name,
                 email: formData.email,
                 password: formData.password
             })

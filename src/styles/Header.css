@@ -18,7 +18,7 @@
   }
 
    .search-bar input {
-    width: 450px; /* Szerokość paska wyszukiwania */
+    width: 450px;
     font-size: 16px;
     border: none;
     border-radius: 4px;

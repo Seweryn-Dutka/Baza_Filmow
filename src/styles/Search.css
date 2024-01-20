@@ -1,13 +1,13 @@
 .search-result-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center horizontally within the flex container */
+  align-items: center; 
   justify-content: center;
   gap: 30px;
   min-height: 14cm;
   text-align: center;
-  width: 80%; /* Adjust the width as needed */
-  max-width: 800px; /* Set a maximum width if desired */
+  width: 80%; 
+  max-width: 800px; 
 }
 
 .search-result-container ul {
@@ -50,8 +50,8 @@
 
 .main-box {
   display: flex;
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
+  align-items: center;
+  justify-content: center; 
   background-color: #c2b280;
   background-image: 
     repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px);
